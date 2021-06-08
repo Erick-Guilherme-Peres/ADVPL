@@ -1,18 +1,18 @@
 #include 'protheus.ch'
 #include "topconn.ch"
 
-/************************************************************************************************/
-/* Rotina: TFFINP08																				*/
-/* Desenvolvimento: Erick Guilherme Peres		Validado Por: Erick Guilherme Peres				*/	
-/* Data CriaÁ„o: 21/12/200						Data ValidaÁ„o:	19/02/2021						*/
-/* Funcionalidade: Rotina automatica para retornar a cotaÁ„o das moedas do Banco Central		*/
-/*																								*/
-/*|Vers„o | ObservaÁıes															   | ValidaÁ„o |*/
-/*|-------|------------------------------------------------------------------------|-----------|*/
-/*| 001.0 |	CriaÁ„o da Funcionalidade											   | 21/12/2020|*/
-/************************************************************************************************/
+/********************************************************************************************************/
+/* Rotina: TFFINP08 - Desenvolvido para empresa Toffano Produtos Alimenticios				*/
+/* Desenvolvimento: Erick Guilherme Peres		Validado Por: Erick Guilherme Peres		*/	
+/* Data Cria√ß√£o: 21/12/200						Data Valida√ß√£o:	19/02/2021	*/
+/* Funcionalidade: Rotina automatica para retornar a cota√ß√£o das moedas do Banco Central		*/
+/*													*/
+/*|Vers√£o | Observa√ß√µes									   | Valida√ß√£o |*/
+/*|-------|--------------------------------------------------------------------------------|-----------|*/
+/*| 001.0 | Cria√ß√£o da Funcionalidade						  	   | 21/12/2020|*/
+/********************************************************************************************************/
 
-User Function TFFINP08( aParam ) // Recebo como Parametros os dados padrıes do Cadastro da Tarefa no WorkFlow ( Empresa, Filial, Unidade, etc.. )
+User Function TFFINP08( aParam ) // Recebo como Parametros os dados padr√µes do Cadastro da Tarefa no WorkFlow ( Empresa, Filial, Unidade, etc.. )
 Local aMoedas := {}
 Local aRetMoeda
 
@@ -21,7 +21,7 @@ Local cEmpresa
 Local cFilEmp
 Local cBase
 
-Local cDest := ""	// Define o(s) Destinat·rio(s) do E-mail
+Local cDest := ""	// Define o(s) Destinat√°rio(s) do E-mail
 Local dDataRef
 
 Local nCont
@@ -40,13 +40,13 @@ Local nX := 1
 		RPCSetEnv( cEmpresa, cFilEmp,"","","","",{"SM0", "SM2"})
 	endIf
 
-	aMoedas := MoedaSist()	//Chama FunÁ„o para retornar as moedas que a empresa utiliza
+	aMoedas := MoedaSist()	//Chama Fun√ß√£o para retornar as moedas que a empresa utiliza
 	
-	cBase := Substr(AllTrim( SuperGetMv( "MV_X_APLIC",, "" ) ), 1,1)   //Par‚metro Customizado que define ambiente de execuÁ„o da AplicaÁ„o do Protheus
+	cBase := Substr(AllTrim( SuperGetMv( "MV_X_APLIC",, "" ) ), 1,1)   //Par√¢metro Customizado que define ambiente de execu√ß√£o da Aplica√ß√£o do Protheus
 	cHtml := '<html>'
 	cHtml += '	<head>'
 	cHtml += '		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />'
-	cHtml += '		<title>CotaÁ„o Monet·ria Dia: ' + DToC( dDataBase ) + '</title>'
+	cHtml += '		<title>Cota√ß√£o Monet√°ria Dia: ' + DToC( dDataBase ) + '</title>'
 	cHtml += '		<style type="text/css">' 
 	cHtml += '			<!-- body {background-color: #9AB986;} 2Estyle1 {font-family: Segoe UI,Verdana, Arial;font-size: 12pt;}'
 	cHtml += '								2Estyle2 {font-family: Segoe UI,Verdana, Arial;font-size: 12pt;color: rgb(255,0,0)}' 
@@ -63,18 +63,18 @@ Local nX := 1
 		cHtml += '					<tr> '     
 		cHtml += '						<td colspan="4"> '     
 		cHtml += '							<p class="style1">'
-		cHtml += '							Ambiente de homologaÁ„o</p>'
+		cHtml += '							Ambiente de homologa√ß√£o</p>'
 		cHtml += '						</td>'    
 		cHtml += '					</tr>'
 		
-		//Quando for HomologaÁ„o, por padr„o altera o(s) destinat·rio(s) do e-mail, para n„o enviar por exemplo ao Depto Financeiro sem a devida necessidade
-		cDest := "email@destinatario.com.br"	//E-mail do Destinat·rio
+		//Quando for Homologa√ß√£o, por padr√£o altera o(s) destinat√°rio(s) do e-mail, para n√£o enviar por exemplo ao Depto Financeiro sem a devida necessidade
+		cDest := "email@destinatario.com.br"	//E-mail do Destinat√°rio
 	endif
 			
 	cHtml += '					<tr> '     
 	cHtml += '						<td colspan="4"> '     
 	cHtml += '							<p class="style1">'
-	cHtml += '								Esta mensagem refere-se a CotaÁ„o Monet·ria da ' + AllTrim( Capital( FwGrpName() ) ) + ': '
+	cHtml += '								Esta mensagem refere-se a Cota√ß√£o Monet√°ria da ' + AllTrim( Capital( FwGrpName() ) ) + ': '
 	cHtml += '							</p>'
 	cHtml += '						</td>'    
 	cHtml += '					</tr>'       					 
@@ -110,7 +110,7 @@ Local nX := 1
 		nTentativa := 0
 		lMoeda := .T.
 		while lMoeda
-			aRetMoeda := CapturaMoeda( dDataRef, aMoedas[ nCont, 2 ] ) //Chama FunÁ„o que realizar· a Captura do Valor da CotaÁ„o
+			aRetMoeda := CapturaMoeda( dDataRef, aMoedas[ nCont, 2 ] ) //Chama Fun√ß√£o que realizar√° a Captura do Valor da Cota√ß√£o
 			lMoeda	:= !aRetMoeda[1]
 			nMoeda2 := aRetMoeda[2]
 			nTentativa++
@@ -183,10 +183,10 @@ Local nX := 1
 	cHtml += '	</body>'
 	cHtml += '</html>'
 	
-	U_EnviarEMail( cDest, "[FINANCEIRO] CotaÁ„o Monet·ria ( " + AllTrim( Capital( FwGrpName() ) ) + " ) - Dia: "  + DToC( dDataBase ), cHtml, "", .f., .F. )  // FunÁ„o customizada para disparar o e-mail confirmando as alteraÁıes da CotaÁ„o da Moeda 
+	U_EnviarEMail( cDest, "[FINANCEIRO] Cota√ß√£o Monet√°ria ( " + AllTrim( Capital( FwGrpName() ) ) + " ) - Dia: "  + DToC( dDataBase ), cHtml, "", .f., .F. )  // Fun√ß√£o customizada para disparar o e-mail confirmando as altera√ß√µes da Cota√ß√£o da Moeda 
 Return
 
-Static Function MoedaSist() // FunÁ„o que Retorna Array Com Simbolo, Codigo do Banco Central, Posicao da Tabela SM2 e Descricao das Moedas Estrangeiras 
+Static Function MoedaSist() // Fun√ß√£o que Retorna Array Com Simbolo, Codigo do Banco Central, Posicao da Tabela SM2 e Descricao das Moedas Estrangeiras 
 Local aMoedas 		:= {}
 Local aMoedasSist	:= {}
 
@@ -194,8 +194,8 @@ Local nCont
 Local nMoedas
 Local cTitulo
 
-	aAdd( aMoedas, { "US$", 1 } ) 		// Array com o Simbolo da Moeda e o CÛdigo da Moeda no Banco Central
-	aAdd( aMoedas, { "EURO", 21619 } )	// o CÛdigo da Moeda no Banco Central, vocÍ descobre atravÈs do seguinte endereÁo: https://egas.digital/cotacoes.txt
+	aAdd( aMoedas, { "US$", 1 } ) 		// Array com o Simbolo da Moeda e o C√≥digo da Moeda no Banco Central
+	aAdd( aMoedas, { "EURO", 21619 } )	// o C√≥digo da Moeda no Banco Central, voc√™ descobre atrav√©s do seguinte endere√ßo: https://egas.digital/cotacoes.txt
 
 	for nCont := 2 to 99
 		if GetMv( "MV_SIMB" + cValToChar( nCont ), .T. )
@@ -210,7 +210,7 @@ Local cTitulo
 	next
 Return aMoedasSist
 
-Static Function CapturaMoeda( dDataRef, nMoeda )	//FunÁ„o que realiza a integraÁ„o com a API do Banco Central e Retorna o Valor da CotaÁ„o, conforme Data Informada
+Static Function CapturaMoeda( dDataRef, nMoeda )	//Fun√ß√£o que realiza a integra√ß√£o com a API do Banco Central e Retorna o Valor da Cota√ß√£o, conforme Data Informada
 Local aHeader := {}
 
 Local cURL  := "https://api.bcb.gov.br"
